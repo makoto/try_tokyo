@@ -2,6 +2,7 @@ require 'rubygems'
 require 'sinatra'
 require 'json'
 require 'tokyo_tyrant'
+require 'uuid'
 
 def db
   @db ||= TokyoTyrant::DB.new('127.0.0.1', 1978)
@@ -10,7 +11,7 @@ end
 enable :sessions
 
 def user_scope
-  @env['REMOTE_ADDR']
+  session['uuid'] ||= UUID.generate
 end
 
 def scoped_key(key)
