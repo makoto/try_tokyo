@@ -80,7 +80,7 @@ post '/find' do
       cursor << {k.sub(/^#{user_scope}\./, '') => v}
     end
   else
-    db.mget(keys.map{|key| scoped_key(key)}).each do |k, v|
+    db.mget(values.map{|key| scoped_key(key)}).each do |k, v|
       cursor << {k.sub(/^#{user_scope}\./, '') => v}
     end
   end

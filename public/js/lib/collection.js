@@ -136,14 +136,14 @@ DBCollection.prototype.get = function( query , fields , limit , skip ){
 }
 
 DBCollection.prototype.mget = function( keys , fields , limit , skip ){
-  if (keys == null) {
-    keys = [] 
-  }
-  var query = {};
-  for (var i=0; i < keys.length; i++) {
-    query[keys[i]] = null;
-  };
-    return new DBCursor( this._fullName , this._massageObject( query ) , fields , limit , skip );
+  // if (keys == null) {
+  //   keys = [] 
+  // }
+  // var query = {};
+  // for (var i=0; i < keys.length; i++) {
+  //   query[keys[i]] = null;
+  // };
+    return new DBCursor( this._fullName , this._massageObject( keys ) , fields , limit , skip );
     // return new DBCursor( this._fullName , this._massageObject( query ) , fields , limit , skip );
 }
 
