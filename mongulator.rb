@@ -38,11 +38,14 @@ end
 #   coll.update(query, doc, :upsert => upsert, :multi => multi)
 # end
 # 
-# post '/remove' do
-#   coll = scoped_collection(params['name'])
-#   coll.remove(JSON.parse(params['doc']))
-# end
 
+# out
+post '/remove' do
+  key = JSON.parse(params['doc']).values.first
+  db.delete(key)
+end
+
+# mget, get
 post '/find' do
   # coll   = scoped_collection(params['name'])
   # coll   = scoped_collection(params['name'])
