@@ -181,6 +181,9 @@ MongoHandler.prototype = {
         print = this.print;
         this._createCollection('tch');
         tch = db['tch'];
+        
+        this._createCollection('tcb');
+        tcb = db['tcb'];
 
         // So this eval statement is the heart of the REPL.
         var result = eval(this._currentCommand.trim());

@@ -4,8 +4,16 @@ require 'json'
 require 'tokyo_tyrant'
 require 'uuid'
 
+def tch
+  TokyoTyrant::DB.new('127.0.0.1', 1978)
+end
+
+def tcb
+  TokyoTyrant::BDB.new('127.0.0.1', 1979)
+end
+
 def db
-  @db ||= TokyoTyrant::DB.new('127.0.0.1', 1978)
+  @db ||= self.send(params['name'].to_sym)
 end
 
 enable :sessions
@@ -24,13 +32,32 @@ end
 
 # mput
 post '/insert' do
-  json = JSON.parse(params['doc'])
-  new_json = {}
-  json.each{|key, value|
-    new_json[scoped_key(key)] = value
-  }
-  db.mput(new_json)
+  hash = JSON.parse(params['doc'])
+  db.mput(scoped_hash(hash))
 end
+
+post  '/putlist' do
+  hash = JSON.parse(params['doc'])
+  db.putlist(scoped_hash(hash))
+end
+
+def scoped_hash(hash)
+  new_hash = {}
+  hash.each{|key, value|
+    new_hash[scoped_key(key)] = value
+  }
+  return new_hash
+end
+
+post  '/putdup' do
+  raise "PUTLIST"
+end
+
+get  '/getlist' do
+  raise "GETLIST"
+end
+
+
 
 # out
 post '/remove' do

@@ -172,6 +172,16 @@ DBCollection.prototype.mput = function( obj , _allow_dot ){
     return this._mongo.insert( this._fullName , obj );
 }
 
+DBCollection.prototype.putlist = function( obj , _allow_dot ){
+  if ( ! obj )
+      throw "no object!";
+  if ( ! _allow_dot ) {
+      this._validateForStorage( obj );
+  }
+  return this._mongo.putlist( this._fullName , obj );
+}
+
+
 DBCollection.prototype.out = function( t ){
     return this._mongo.remove( this._fullName , this._massageObject( t ) );
 }

@@ -16,6 +16,11 @@ Connection.prototype = {
   initialize: function() {
   },
 
+  putlist: function(collectionName, doc) {
+    $.post('putlist', {name: collectionName, doc: tojson(doc)});
+    return 'ok';
+  },
+
   insert: function(collectionName, doc) {
     delete doc['_id'];
     $.post('insert', {name: collectionName, doc: tojson(doc)});
