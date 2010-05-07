@@ -181,6 +181,10 @@ DBCollection.prototype.putlist = function( obj , _allow_dot ){
   return this._mongo.putlist( this._fullName , obj );
 }
 
+DBCollection.prototype.getlist = function( keys , fields , limit , skip ){
+      return this._mongo.getlist( this._fullName , this._massageObject( keys ) , fields , limit , skip );
+    // return new DBCursor( this._fullName , this._massageObject( query ) , fields , limit , skip );
+}
 
 DBCollection.prototype.out = function( t ){
     return this._mongo.remove( this._fullName , this._massageObject( t ) );

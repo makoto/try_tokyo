@@ -45,6 +45,14 @@ Connection.prototype = {
     return new DBCursor(collectionName, query, fields, limit, skip);
   },
 
+  // Should return the first set of results for a cursor docect.
+  getlist: function(collectionName, query, fields, limit, skip) {
+    query      = query  || {}
+    fields     =  "getlist"
+    return new DBCursor(collectionName, query, fields, limit, skip);
+  },
+
+
   runCommand: function() {
   }
 };

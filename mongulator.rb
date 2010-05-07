@@ -54,7 +54,8 @@ post  '/putdup' do
 end
 
 get  '/getlist' do
-  raise "GETLIST"
+  key = JSON.parse(params['doc']).values.first
+  db.getlist(scoped_key(key))
 end
 
 
@@ -67,19 +68,22 @@ end
 
 # mget, get
 post '/find' do
-  # raise params.inspect
   keys  = JSON.parse(params['query']).keys
+  values  = JSON.parse(params['query']).values
   cursor = [] 
-  unless keys.empty?
-    db.mget(keys.map{|key| scoped_key(key)}).each do |k, v|
+  return JSON.generate(cursor) if keys.empty?
+
+  if params['fields'] == 'getlist' 
+    # raise values.map{|key| scoped_key(key)}.inspect
+    # raise db.getlist(keys.map{|key| scoped_key(key)}).inspect
+    db.getlist(values.map{|key| scoped_key(key)}).each do |k, v|
       cursor << {k.sub(/^#{user_scope}\./, '') => v}
     end
   else
-    # db.each do  |key, value|
-    #   next unless key.match(user_scope)
-    #   cursor << {key.sub(/^#{user_scope}\./, '') => value}
-    # end
+    db.mget(keys.map{|key| scoped_key(key)}).each do |k, v|
+      cursor << {k.sub(/^#{user_scope}\./, '') => v}
+    end
   end
-
+  # raise cursor.inspect
   return JSON.generate(cursor)
 end

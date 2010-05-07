@@ -288,10 +288,12 @@ MongoHandler.prototype = {
              PTAG('Note: Only a subset of TokyoCabinet\'s features are provided here.') +
              PTAG('For everything else, download and install at 1978th.net/tokyocabinet/.') +
              PTAG('tch.mput({a: 1, b:2})        save multiple key/value pairs') +
-             PTAG('tch.out("b")              delete object with key "b"') +                 
+             PTAG('tch.out("b")                delete object with key "b"') +                 
              PTAG('tch.get("b")                 list object with key "b"') +                 
-             PTAG('tch.mget(1, "a", "c")        list objects with the keys 1, "a" and "c"');
-
+             PTAG('tch.mget(1, "a", "c")        list objects with the keys 1, "a" and "c"') +
+              PTAG('tch.mput({a: 1, b:2})        save multiple key/value pairs') +
+              PTAG('tcb.putlist({"foo": ["bar", "baz"]})                 insert a list of objects') +                 
+              PTAG('tcb.getlist("foo")        list objects with the keys 1, "a" and "c"');
   },
 
   _use: function() {
