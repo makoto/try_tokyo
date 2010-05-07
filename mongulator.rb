@@ -40,15 +40,18 @@ end
 
 # mget, get
 post '/find' do
+  # raise params.inspect
   keys  = JSON.parse(params['query']).keys
   cursor = [] 
   unless keys.empty?
-    cursor << db.mget(keys.map{|key| scoped_key(key)})
-  else
-    db.each do  |key, value|
-      next unless key.match(user_scope)
-      cursor << {key.sub(/^#{user_scope}\./, '') => value}
+    db.mget(keys.map{|key| scoped_key(key)}).each do |k, v|
+      cursor << {k.sub(/^#{user_scope}\./, '') => v}
     end
+  else
+    # db.each do  |key, value|
+    #   next unless key.match(user_scope)
+    #   cursor << {key.sub(/^#{user_scope}\./, '') => value}
+    # end
   end
 
   return JSON.generate(cursor)

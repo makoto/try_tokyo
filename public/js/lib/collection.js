@@ -129,9 +129,24 @@ DBCollection.prototype._validateForStorage = function( o ){
 };
 
 
-DBCollection.prototype.find = function( query , fields , limit , skip ){
-    return new DBCursor( this._fullName , this._massageObject( query ) , fields , limit , skip );
+DBCollection.prototype.get = function( query , fields , limit , skip ){
+  var hash = {};
+  hash[query] = null;
+    return new DBCursor( this._fullName , this._massageObject( hash ) , fields , limit , skip );
 }
+
+DBCollection.prototype.mget = function( keys , fields , limit , skip ){
+  if (keys == null) {
+    keys = [] 
+  }
+  var query = {};
+  for (var i=0; i < keys.length; i++) {
+    query[keys[i]] = null;
+  };
+    return new DBCursor( this._fullName , this._massageObject( query ) , fields , limit , skip );
+    // return new DBCursor( this._fullName , this._massageObject( query ) , fields , limit , skip );
+}
+
 
 
 DBCollection.prototype.findOne = function( query , fields ){
@@ -148,7 +163,7 @@ DBCollection.prototype.findOne = function( query , fields ){
     return ret;
 }
 
-DBCollection.prototype.insert = function( obj , _allow_dot ){
+DBCollection.prototype.mput = function( obj , _allow_dot ){
     if ( ! obj )
         throw "no object!";
     if ( ! _allow_dot ) {
@@ -157,28 +172,8 @@ DBCollection.prototype.insert = function( obj , _allow_dot ){
     return this._mongo.insert( this._fullName , obj );
 }
 
-DBCollection.prototype.remove = function( t ){
+DBCollection.prototype.delete = function( t ){
     return this._mongo.remove( this._fullName , this._massageObject( t ) );
-}
-
-DBCollection.prototype.update = function( query , obj , upsert , multi ){
-    assert( query , "need a query" );
-    assert( obj , "need an object" );
-    this._validateObject( obj );
-    return this._mongo.update( this._fullName , query , obj , upsert ? true : false , multi ? true : false );
-}
-
-DBCollection.prototype.save = function( obj ){
-    if ( obj == null || typeof( obj ) == "undefined" ) 
-        throw "can't save a null";
-
-    if ( typeof( obj._id ) == "undefined" ){
-        obj._id = new ObjectId();
-        return this.insert( obj );
-    }
-    else {
-        return this.update( { _id : obj._id } , obj , true );
-    }
 }
 
 DBCollection.prototype._genIndexName = function( keys ){
