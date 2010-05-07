@@ -44,12 +44,17 @@ end
 # end
 
 post '/find' do
-  coll   = scoped_collection(params['name'])
-  query  = JSON.parse(params['query'])
-  fields = JSON.parse(params['fields'])
-  fields = nil if fields == {}
-  limit  = params['limit'].to_i
-  skip   = params['skip'].to_i
-  cursor = coll.find(query, :fields => fields, :limit => limit, :skip => skip)
-  return JSON.generate(cursor.to_a)
+  # coll   = scoped_collection(params['name'])
+  # coll   = scoped_collection(params['name'])
+  # query  = JSON.parse(params['query'])
+  # fields = JSON.parse(params['fields'])
+  # fields = nil if fields == {}
+  # limit  = params['limit'].to_i
+  # skip   = params['skip'].to_i
+  # cursor = coll.find(query, :fields => fields, :limit => limit, :skip => skip)
+  cursor = [] 
+  db.each do  |key, value|
+    cursor << {key => value}
+  end
+  return JSON.generate(cursor)
 end
