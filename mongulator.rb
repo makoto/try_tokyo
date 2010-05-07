@@ -14,7 +14,7 @@ def user_scope
 end
 
 def scoped_key(key)
-  user_scope + '.' + name
+  user_scope + '.' + key
 end
 
 get '/' do
@@ -25,7 +25,12 @@ end
 post '/insert' do
   # db = scoped_database(params['name'])
   # if coll.count < 200
-    db.mput(JSON.parse(params['doc']))
+    json = JSON.parse(params['doc'])
+    new_json = {}
+    json.each{|key, value|
+      new_json[scoped_key(key)] = value
+    }
+    db.mput(new_json)
   # end
 end
 
@@ -60,10 +65,12 @@ post '/find' do
   cursor = [] 
   unless keys.empty?
     # raise keys.inspect
-    cursor << db.mget(keys)
+    cursor << db.mget(keys.map{|key| scoped_key(key)})
   else
     db.each do  |key, value|
-      cursor << {key => value}
+      if key.match(user_scope)
+        cursor << {key.sub(/^#{user_scope}\./, '') => value}
+      end
     end
   end
   # raise cursor.inspect
