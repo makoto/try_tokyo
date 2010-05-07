@@ -179,6 +179,8 @@ MongoHandler.prototype = {
     if(this._shouldEvaluateCommand(tokens))  {
         db    = this.db;
         print = this.print;
+        this._createCollection('tch');
+        tch = db['tch'];
 
         // So this eval statement is the heart of the REPL.
         var result = eval(this._currentCommand.trim());
@@ -282,10 +284,10 @@ MongoHandler.prototype = {
       return PTAG('HELP') + 
              PTAG('Note: Only a subset of TokyoCabinet\'s features are provided here.') +
              PTAG('For everything else, download and install at 1978th.net/tokyocabinet/.') +
-             PTAG('db.mput({a: 1, b:2})        save multiple key/value pairs') +
-             PTAG('db.delete("b")              delete object with key "b"') +                 
-             PTAG('db.get("b")                 list object with key "b"') +                 
-             PTAG('db.mget(1, "a", "c")        list objects with the keys 1, "a" and "c"');
+             PTAG('tch.mput({a: 1, b:2})        save multiple key/value pairs') +
+             PTAG('tch.delete("b")              delete object with key "b"') +                 
+             PTAG('tch.get("b")                 list object with key "b"') +                 
+             PTAG('tch.mget(1, "a", "c")        list objects with the keys 1, "a" and "c"');
 
   },
 
