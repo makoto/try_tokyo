@@ -134,7 +134,6 @@ var MongoHandler = function() {
 };
 
 MongoHandler.prototype = {
-
   _process: function(inputString, errorCheck) {
     this._rawCommand += ' ' + inputString;
 
@@ -281,14 +280,12 @@ MongoHandler.prototype = {
   // help command
   _help: function() {
       return PTAG('HELP') + 
-             PTAG('Note: Only a subset of MongoDB\'s features are provided here.') +
-             PTAG('For everything else, download and install at mongodb.org.') +
-             PTAG('db.foo.help()                 help on collection methods') +
-             PTAG('db.foo.find()                 list objects in collection foo') +
-             PTAG('db.foo.save({a: 1})           save a document to collection foo') +
-             PTAG('db.foo.update({a: 1}, {a: 2}) update document where a == 1') +
-             PTAG('db.foo.find({a: 1})           list objects in foo where a == 1') +
-             PTAG('it                            use to further iterate over a cursor');
+             PTAG('Note: Only a subset of TokyoCabinet\'s features are provided here.') +
+             PTAG('For everything else, download and install at 1978th.net/tokyocabinet/.') +
+             PTAG('db.mput({a: 1, b:2})        save multiple key/value pairs') +
+             PTAG('db.delete("b")              delete object with key "b"') +                 
+             PTAG('db.get("b")                 list object with key "b"') +                 
+             PTAG('db.mget(1, "a", "c")        list objects with the keys 1, "a" and "c"');
 
   },
 
