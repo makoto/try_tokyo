@@ -172,7 +172,7 @@ DBCollection.prototype.mput = function( obj , _allow_dot ){
     return this._mongo.insert( this._fullName , obj );
 }
 
-DBCollection.prototype.delete = function( t ){
+DBCollection.prototype.out = function( t ){
     return this._mongo.remove( this._fullName , this._massageObject( t ) );
 }
 

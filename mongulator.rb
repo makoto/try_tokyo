@@ -35,7 +35,7 @@ end
 # out
 post '/remove' do
   key = JSON.parse(params['doc']).values.first
-  db.delete(key)
+  db.delete(scoped_key(key))
 end
 
 # mget, get
