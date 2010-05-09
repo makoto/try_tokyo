@@ -5,10 +5,12 @@ require 'tokyo_tyrant'
 require 'uuid'
 
 def tch
+  # ttserver -port 1978
   TokyoTyrant::DB.new('127.0.0.1', 1978)
 end
 
 def tcb
+  # ttserver + -port 1979
   TokyoTyrant::BDB.new('127.0.0.1', 1979)
 end
 
