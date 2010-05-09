@@ -309,8 +309,11 @@ MongoHandler.prototype = {
 
   _tutorial: function() {
     this._tutorialPtr = 0;
-    return PTAG("This is a self-guided tutorial on MongoDB and the MongoDB shell.") +
+    return PTAG("This is a self-guided tutorial on Tokyo Cabinet and Tokyo Tyrant.") +
            PTAG("The tutorial is simple, more or less a few basic commands to try.") +
+           PTAG("Unlike Redis or Mongo, Tokyo Cabinet does not have interactive shell") +
+           PTAG("However, TC has several command line tools, such as tcrmgr") +
+           PTAG("In this tutorial, we use ruby_tokyotyrant commands") +
            PTAG("To go directly to any part tutorial, enter one of the commands t0, t1, t2...t10") +
            PTAG("Otherwise, use 'next' and 'back'. Start by typing 'next' and pressing enter.");
   },
@@ -337,120 +340,55 @@ MongoHandler.prototype = {
 
   _t1: function() {
     this._tutorialPtr = 1;
-    return PTAG('1. JavaScript Shell') +
-           PTAG('The first thing to notice is that the MongoDB shell is JavaScript-based.') +
-           PTAG('So you can do things like:') +
-           PTAG('  a = 5; ') +
-           PTAG('  a * 10; ') +
-           PTAG("  for(i=0; i<10; i++) { print('hello'); }; ") +
-           PTAG("Try a few JS commands; when you're ready to move on, enter 'next'");
+    return PTAG('1. What is Tokyo Cabinet ?') +
+           PTAG('Tokyo Cabinet(TC) is a high performance DBM(Data Base Manager).') +
+           PTAG('TC supports hash(TCH) , B+ tree(TCB), fixed-length array(TCF) and table database type(TCT).') +
+           PTAG('Tokyo Tyrant(TT) is a network interface to Tokyo Cabinet.') +
+           PTAG('In this tutorial, all the samples are based on TT') +
+           PTAG("Enter 'next'");
 
   },
 
   _t2: function() {
     this._tutorialPtr = 2;
-    return PTAG("2. Documents") +
-           PTAG("MongoDB is a document database. This means that we store data as documents,") +
-           PTAG("which are simiar to JavaScript objects. Here below are a few sample JS objects:") +
-           PTAG('  var a = {age: 25}; ') +
-           PTAG("  var n = {name: 'Ed', languages: ['c', 'ruby', 'js']}; ") +
-           PTAG("  var student = {name: 'Jim', scores: [75, 99, 87.2]}; ") +
-           PTAG("Create some documents, then enter 'next'");
+    return PTAG("2. Hash Database") +
+           PTAG("Hash (TCH) provides basic functionality as a key/value store.") +
+           PTAG("In this tutorial 'tch' means Hash database.") +
+           BR() +
+           PTAG('tch.mput({a: 1, b:2})        save multiple key/value pairs') +
+           PTAG('tch.mget("a""c")        list objects with the keys 1, "a" and "c"') +
+           BR() +
+           PTAG("Enter 'next'");
   },
 
 
   _t3: function() {
     this._tutorialPtr = 3;
-    return PTAG('3. Saving') +
-           PTAG("Here's how you save a document to MongoDB:") +
-           PTAG("  db.scores.save({a: 99}); ") +
+    return PTAG('3. B+Tree Database') +
+           PTAG("Unlike TCH(Tokyo Cabinet Hash database), you can store duplicate keys ") +
+           PTAG("and also store them in specific order.:") +
+           PTAG('tch = Tokyo Cabinet Hash database') +
            BR() +
-           PTAG("This says, \"save the document '{a: 99}' to the 'scores' collection.\"") +
-           PTAG("Go ahead and try it. Then, to see if the document was saved, try") +
-           PTAG("  db.scores.find(); ") +
-           PTAG("Once you've tried this, type 'next'.") +
-           BR();
+           PTAG('tcb.putlist({"foo": ["bar", "baz"]}) insert a list of objects') +                 
+           PTAG('tcb.getlist("foo")                   list objects with the keys 1, "a" and "c"') +
+           BR() +
+           PTAG("Enter 'next'.");
   },
 
   _t4: function() {
     this._tutorialPtr = 4;
-    return PTAG('4. Saving and Querying') +
-           PTAG("Try adding some documents to the scores collection:") +
-           PTAG("  for(i=0; i<10; i++) { db.scores.save({a: i, exam: 5}) }; ") +
-           BR() +
-           PTAG("Try that, then enter") +
-           PTAG("  db.scores.find(); ") +
-           PTAG("to see if the save succeeded. Since the shell only displays 10 results at time,") +
-           PTAG("you'll need to enter the 'it' command to iterate over the rest.") +
+    return PTAG('4. Table Database') +
+           PTAG("TBD:") +
            BR() +
            PTAG("(enter 'next' when you're ready)");
   },
 
   _t5: function() {
     this._tutorialPtr = 5;
-    return PTAG('5. Basic Queries') +
-           PTAG("You've already tried a few queries, but let's make them more specific.") +
-           PTAG("How about finding all documents where a == 2:") +
-           PTAG("  db.scores.find({a: 2}); ") +
-           BR() +
-           PTAG("Or what about documents where a > 15?") +
-           PTAG("  db.scores.find({a: {'$gt': 15}}); ") +
-           BR();
-  },
-
-   _t6: function() {
-    this._tutorialPtr = 6;
-    return PTAG('6. Query Operators') +
-           PTAG("Query Operators:") +
-           PTAG("$gt is one of many special query operators. Here are few others:") +
-           PTAG("  $lt  - '<',   $lte - '<=', ") +
-           PTAG("  $gte - '>=',  $ne  - '!='") +
-           PTAG("  $in - 'is in array',  $nin - '! in array'") +
-           BR() +
-           PTAG("db.scores.find({a: {'$in': [2, 3, 4]}}); ") +
-           PTAG("db.scores.find({a: {'$gte': 2, '$lte': 4}}); ") +
-           PTAG("Try creating some queries, then type 'next.'") +
-           BR();
-  },
-
-  _t7: function() {
-    this._tutorialPtr = 7;
-    return PTAG('7. Updates') +
-           PTAG("Now create a couple documents like these for updating:") +
-           PTAG("  db.users.save({name: 'Johnny', languages: ['ruby', 'c']}); ") +
-           PTAG("  db.users.save({name: 'Sue', languages: ['scala', 'lisp']}); ") +
-           PTAG("Make sure they were saved by called db.users.find()") +
-           PTAG("Update the first document like so:") +
-           PTAG("  db.users.update({name: 'Johnny'}, {name: 'Cash', languages: ['english']}); ");
-  },
-
-  _t8: function() {
-    this._tutorialPtr = 8;
-    return PTAG('8. Update Operators') +
-           PTAG("The previous update replaced the entire document, but MongoDB also") +
-           PTAG("supports partial updates to documents. For example, you can set a value:") +
-           PTAG("  db.users.update({name: 'Cash'}, {'$set': {'age': 50} }); ") +
-           PTAG("You can also push and pull items from arrays:") +
-           PTAG("  db.users.update({name: 'Sue'}, {'$pull': {'languages': 'scala'} }); ") +
-           PTAG("  db.users.update({name: 'Sue'}, {'$push': {'languages': 'ruby'} }); ") +
-           PTAG("Give these a try, check the results, and then enter 'next'.");
-  },
-
-  _t9: function() {
-    this._tutorialPtr = 9;
-    return PTAG('9. Deleting data') +
-           PTAG("To delete everything from a collection:") +
-           PTAG("  db.scores.remove();") +
-           PTAG("To delete matching documents only, add a query selector to the remove method:") +
-           PTAG("  db.users.remove({name: 'Sue'});");
-  },
-
-  _t10: function() {
-    this._tutorialPtr = 10;
-    return PTAG('10. Now go download it!') +
-           PTAG("There's a lot more to MongoDB than what's presented in this tutorial.") +
-           PTAG("Best thing is to go to the <a target='_blank' href='http://www.mongodb.org/display/DOCS/Downloads'>downloads page</a> or to <a target='_blank' href='http://mongodb.org'>mongodb.org</a> to check out the docs.") +
-           PTAG("(You can also keep fiddling around here, but you'll be a bit limited.)");
+    return PTAG('5. Now go download it!') +
+           PTAG("There's a lot more to TokyoCabinet/Tyrant than what's presented in this tutorial.") +
+           PTAG("Best thing is to go to the <a target='_blank' href='http://1978th.net'>downloads page</a> or to <a target='_blank' href='http://tokyocabinetwiki.pbworks.com'>Tokyocabinet Wiki</a> to check out the docs.") +
+           PTAG("(You can also keep fiddling around here, but you'll be a very limited.)");
   },
 
   _iterate: function() {
@@ -495,16 +433,6 @@ MongoHandler.prototype = {
           return this._t4;
         case 't5':
           return this._t5;
-        case 't6':
-          return this._t6;
-        case 't7':
-          return this._t7;
-        case 't8':
-          return this._t8;
-        case 't9':
-          return this._t9;
-        case 't10':
-          return this._t10;
         case 'show':
           if(tokens[1].value.toLowerCase() == 'collections') {
             return this._showCollections;
