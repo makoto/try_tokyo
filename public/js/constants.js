@@ -5,7 +5,15 @@ Date: September 1, 2009
  
 (c) Creative Commons 2009
 http://creativecommons.org/licenses/by-sa/2.5/
+
+TryTokyo (Enhanced from TryMongo)
+Author: Makoto Inoue & Elliot Crosby-McCullough
+Date: May 5, 2010
+
 */
+
+
+
 // TODO: Organize this a bit.
 
 var DefaultInputHtml = function(stack) {

@@ -5,6 +5,12 @@ Date: September 1, 2009
 
 (c) Creative Commons 2009
 http://creativecommons.org/licenses/by-sa/2.5/
+
+TryTokyo (Enhanced from TryMongo)
+Author: Makoto Inoue & Elliot Crosby-McCullough
+Date: May 5, 2010
+
+
 */
 
 // Readline class to handle line input.
@@ -284,15 +290,17 @@ MongoHandler.prototype = {
  
   // help command
   _help: function() {
-      return PTAG('HELP') + 
-             PTAG('Note: Only a subset of TokyoCabinet\'s features are provided here.') +
+      return PTAG('Note: Only a subset of TokyoCabinet\'s features are provided here.') +
              PTAG('For everything else, download and install at 1978th.net/tokyocabinet/.') +
+             PTAG('The syntax is enhanced version of ruby-tokyotyrant library') +
+             PTAG('tch = Tokyo Cabinet Hash database') +
              PTAG('tch.mput({a: 1, b:2})        save multiple key/value pairs') +
              PTAG('tch.out("b")                delete object with key "b"') +                 
              // PTAG('tch.get("b")                 list object with key "b"') +                 
              PTAG('tch.mget(1, "a", "c")        list objects with the keys 1, "a" and "c"') +
-              PTAG('tcb.putlist({"foo": ["bar", "baz"]})                 insert a list of objects') +                 
-              PTAG('tcb.getlist("foo")        list objects with the keys 1, "a" and "c"');
+             PTAG('tch = Tokyo Cabinet Hash database') +
+             PTAG('tcb.putlist({"foo": ["bar", "baz"]})                 insert a list of objects') +                 
+             PTAG('tcb.getlist("foo")        list objects with the keys 1, "a" and "c"');
   },
 
   _use: function() {
