@@ -27,7 +27,7 @@ If you are interested in Tokyo, check out these
 
 * Kyle Banker for letting us fork off from TinyMongo shell.
 * Mikio Hirabayashi for Tokyo Cabinet / Tokyo Tyrant work.
-* Mueller for ruby-tokyotyrant ruby gem.
+* Flinn Mueller for ruby-tokyotyrant ruby gem.
 * Eden Development & New Bamboo for letting us develop this during the company hack days.
 
 ## Author ##
