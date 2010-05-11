@@ -30,6 +30,6 @@ If you are interested in Tokyo, check out these
 * Flinn Mueller for ruby-tokyotyrant ruby gem.
 * Eden Development & New Bamboo for letting us develop this during the company hack days.
 
-## Author ##
+## Authors ##
 
-[Makoto Inoue](http://twitter.com/makoto_inoue) & Elliot Crosby-McCullough
+[Makoto Inoue](http://twitter.com/makoto_inoue) & [Elliot Crosby-McCullough](http://twitter.com/elliotcm)
